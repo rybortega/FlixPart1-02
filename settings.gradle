@@ -1,0 +1,2 @@
+rootProject.name = "TFT_Flixster"
+include ':app'
