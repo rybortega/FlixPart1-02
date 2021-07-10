@@ -5,37 +5,59 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/dark_blue"
-    android:paddingTop="10dp"
-    android:paddingBottom="5dp">
+    android:background="@color/dark_blue">
 
     <ImageView
-        android:id="@+id/ivPoster"
-        android:layout_width="350dp"
+        android:id="@+id/ivBackdrop"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:alpha="0.3"
+        android:scaleType="centerCrop"
+        android:maxHeight="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_alignBottom="@+id/rlMovieInfo"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="2dp"
-        android:layout_toEndOf="@+id/ivPoster"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        tools:text="Wonder Woman: 1984" />
+        android:id="@+id/rlMovieInfo"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/tvOverview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTitle"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/ivPoster"
-        android:textColor="@color/white"
-        tools:text="Wonder Woman comes into conflict with the Soviet Union during the Cold War in the 1980s and finds a formidable foe by the name of the Cheetah." />
+        <ImageView
+            android:id="@+id/ivPoster"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/ivPoster"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            tools:text="Wonder Woman: 1984" />
+
+        <TextView
+            android:id="@+id/tvOverview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTitle"
+            android:layout_alignStart="@+id/tvTitle"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            tools:text="Wonder Woman comes into conflict with the Soviet Union during the Cold War in the 1980s and finds a formidable foe by the name of the Cheetah." />
+
+    </RelativeLayout>
+
 </RelativeLayout>

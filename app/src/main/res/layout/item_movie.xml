@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -11,7 +12,25 @@
         android:id="@+id/ivBackdrop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/backgrounds/scenic">
+        android:alpha="0.3"
+        android:scaleType="centerCrop"
+        android:maxHeight="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_alignBottom="@+id/rlMovieInfo"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <RelativeLayout
+        android:id="@+id/rlMovieInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <ImageView
             android:id="@+id/ivPoster"
@@ -20,8 +39,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"/>
 
         <TextView
             android:id="@+id/tvTitle"
@@ -48,6 +67,6 @@
             android:textColor="@color/white"
             tools:text="Wonder Woman comes into conflict with the Soviet Union during the Cold War in the 1980s and finds a formidable foe by the name of the Cheetah." />
 
-    </ImageView>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -71,6 +71,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         TextView tvTitle;
         TextView tvOverview;
         ImageView ivPoster;
+        ImageView ivBackdrop;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +80,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             tvOverview.setMovementMethod(new ScrollingMovementMethod());
             ivPoster = itemView.findViewById(R.id.ivPoster);
             container = itemView.findViewById(R.id.container);
+            ivBackdrop = itemView.findViewById(R.id.ivBackdrop);
         }
 
         public void bind(Movie movie) {
@@ -92,9 +94,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 Glide.with(context)
                         .load(imageUrl)
                         .placeholder(R.drawable.flicks_backdrop_placeholder)
-                        .circleCrop()
+                        .fitCenter()
                         .transform(new RoundedCornersTransformation(50, 0))
                         .into(ivPoster);
+
+                if (movie.getRating() > 5) {
+                    ivBackdrop.setVisibility(View.VISIBLE);
+                    //Set semitransparent backdrop as background of movie item with
+                    Glide.with(context).load(movie.getBackdropPath())
+                            .placeholder(R.drawable.flicks_backdrop_placeholder)
+                            .into(ivBackdrop);
+                } else {
+                    ivBackdrop.setVisibility(View.GONE);
+                }
             }
             else {
                 // else imageUrl = poster image
@@ -102,12 +114,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 Glide.with(context)
                         .load(imageUrl)
                         .placeholder(R.drawable.flicks_movie_placeholder)
+                        .fitCenter()
+                        .transform(new RoundedCornersTransformation(30, 0))
                         .into(ivPoster);
+
+                if (movie.getRating() > 5) {
+                    ivBackdrop.setVisibility(View.VISIBLE);
+                    //Set semitransparent backdrop as background of movie item with
+                    Glide.with(context).load(movie.getBackdropPath())
+                            .placeholder(R.drawable.flicks_backdrop_placeholder)
+                            .into(ivBackdrop);
+                } else {
+                    ivBackdrop.setVisibility(View.GONE);
+                }
             }
             // ORIGINAL - Glide.with(context).load(imageUrl).into(ivPoster);
 
             // 1. Register click listener on the whole row
-            container.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // 2. Navigate to a new activity on tap

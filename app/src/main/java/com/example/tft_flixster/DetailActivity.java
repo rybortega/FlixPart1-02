@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.media.Rating;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -36,6 +37,8 @@ public class DetailActivity extends YouTubeBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_detail);
 
         tvTitle = findViewById(R.id.tvTitle);
