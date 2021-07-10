@@ -3,6 +3,7 @@ package com.example.tft_flixster.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,6 +76,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
+            tvOverview.setMovementMethod(new ScrollingMovementMethod());
             ivPoster = itemView.findViewById(R.id.ivPoster);
             container = itemView.findViewById(R.id.container);
         }
@@ -87,12 +89,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 // then imageUrl = back drop image
                 imageUrl = movie.getBackdropPath();
-                Glide.with(context).load(imageUrl).into(ivPoster);
+                Glide.with(context)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.flicks_backdrop_placeholder)
+                        .circleCrop()
+                        .transform(new RoundedCornersTransformation(50, 0))
+                        .into(ivPoster);
             }
             else {
                 // else imageUrl = poster image
                 imageUrl = movie.getPosterPath();
-                Glide.with(context).load(imageUrl).circleCrop().transform(new RoundedCornersTransformation(50, 0)).into(ivPoster);
+                Glide.with(context)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.flicks_movie_placeholder)
+                        .into(ivPoster);
             }
             // ORIGINAL - Glide.with(context).load(imageUrl).into(ivPoster);
 
