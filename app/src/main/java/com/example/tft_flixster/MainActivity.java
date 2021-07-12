@@ -1,6 +1,7 @@
 package com.example.tft_flixster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +12,7 @@ import android.view.WindowManager;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.tft_flixster.adapters.MovieAdapter;
+import com.example.tft_flixster.databinding.ActivityMainBinding;
 import com.example.tft_flixster.models.Movie;
 
 import org.json.JSONArray;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
     public static final String TAG = "MainActivity";
 
+    private ActivityMainBinding binding;
     List<Movie> movies;
 
     @Override
@@ -34,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
-        RecyclerView rvMovies = findViewById(R.id.rvMovies);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        RecyclerView rvMovies = binding.rvMovies;
         movies = new ArrayList<>();
         // Create the adapter
         MovieAdapter movieAdapter = new MovieAdapter(this, movies);

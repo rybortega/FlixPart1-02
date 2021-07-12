@@ -22,6 +22,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.tft_flixster.DetailActivity;
 import com.example.tft_flixster.R;
+import com.example.tft_flixster.databinding.ItemMovieBinding;
 import com.example.tft_flixster.models.Movie;
 
 import org.parceler.Parcels;
@@ -75,6 +76,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             tvOverview.setMovementMethod(new ScrollingMovementMethod());
