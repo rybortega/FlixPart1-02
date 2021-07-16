@@ -1,17 +1,13 @@
 package com.example.tft_flixster;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.app.ActionBar;
-import android.media.Rating;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.RatingBar;
-import android.widget.TextView;
+
+import androidx.databinding.DataBindingUtil;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -20,12 +16,10 @@ import com.example.tft_flixster.models.Movie;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
 
 import okhttp3.Headers;
 

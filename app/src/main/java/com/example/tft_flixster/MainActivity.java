@@ -1,20 +1,19 @@
 package com.example.tft_flixster;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.WindowManager;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.WindowManager;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.tft_flixster.adapters.MovieAdapter;
 import com.example.tft_flixster.databinding.ActivityMainBinding;
 import com.example.tft_flixster.models.Movie;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
