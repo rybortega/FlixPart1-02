@@ -14,6 +14,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.tft_flixster.adapters.MovieAdapter;
 import com.example.tft_flixster.databinding.ActivityMainBinding;
 import com.example.tft_flixster.models.Movie;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,5 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onFailure");
             }
         });
+
     }
 }

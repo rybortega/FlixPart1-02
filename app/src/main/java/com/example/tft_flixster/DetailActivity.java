@@ -3,9 +3,12 @@ package com.example.tft_flixster;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ActionBar;
 import android.media.Rating;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -36,12 +39,20 @@ public class DetailActivity extends YouTubeBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_main);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
         Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
+        Boolean isPopular = movie.getRating() >= 8;
         binding.tvTitle.setText(movie.getTitle());
+        binding.tvOverview.setMovementMethod(new ScrollingMovementMethod());
         binding.tvOverview.setText(movie.getOverview());
         binding.ratingBar.setRating((float) movie.getRating());
 
@@ -56,7 +67,7 @@ public class DetailActivity extends YouTubeBaseActivity {
                     }
                     String youtubeKey = results.getJSONObject(0).getString("key");
                     Log.d("DetailActivity", youtubeKey);
-                    initializeYoutube(youtubeKey);
+                    initializeYoutube(youtubeKey, isPopular);
                 } catch (JSONException e) {
                     Log.e("DetailActivity", "Failed to parse JSON", e);
                     e.printStackTrace();
@@ -70,12 +81,17 @@ public class DetailActivity extends YouTubeBaseActivity {
         });
     }
 
-    private void initializeYoutube(String youtubeKey) {
+    private void initializeYoutube(String youtubeKey, Boolean isPopular) {
         binding.player.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 Log.d("DetailActivity", "onInitializationSuccess");
-                youTubePlayer.cueVideo(youtubeKey);
+                //youTubePlayer.cueVideo(youtubeKey);
+                if (isPopular) {
+                    youTubePlayer.loadVideo(youtubeKey);
+                } else {
+                    youTubePlayer.cueVideo(youtubeKey);
+                }
             }
 
             @Override

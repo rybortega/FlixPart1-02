@@ -18,27 +18,46 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.tft_flixster.DetailActivity;
 import com.example.tft_flixster.R;
 import com.example.tft_flixster.databinding.ItemMovieBinding;
 import com.example.tft_flixster.models.Movie;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.parceler.Parcels;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import okhttp3.Headers;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
     Context context;
     List<Movie> movies;
+    private final int POPULAR = 1, NOT_POPULAR = 0;
 
     public MovieAdapter(Context context, List<Movie> movies) {
         this.context = context;
         this.movies = movies;
+    }
+
+    public int getItemViewType(int position){
+        if (movies.get(position).getRating() >= 8)
+            return POPULAR;
+        else
+            return NOT_POPULAR;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -46,8 +65,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d("MovieAdapter", "onCreateViewHolder");
-        View movieView = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
-        return new ViewHolder(movieView);
+        View movieView;
+        ViewHolder viewHolder;
+        if (viewType == POPULAR ) {
+            movieView = LayoutInflater.from(context).inflate(R.layout.viewholder_popular, parent, false);
+            viewHolder = new ViewHolder(movieView);
+        }
+        else {
+            movieView = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
+            viewHolder = new ViewHolder(movieView);
+        }
+        return viewHolder;
     }
 
     // Involves populating data into the item through holder
@@ -68,11 +96,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        public static final String YOUTUBE_API_KEY = "AIzaSyAldOKh_BbjLmlldSG5_d2OEWDhwONkdFI";
+        public static final String VIDEOS_URL = "https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+
         RelativeLayout container;
         TextView tvTitle;
         TextView tvOverview;
         ImageView ivPoster;
         ImageView ivBackdrop;
+        FloatingActionButton fabPopPlay;
+        YouTubePlayerView player;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,57 +116,58 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             ivPoster = itemView.findViewById(R.id.ivPoster);
             container = itemView.findViewById(R.id.container);
             ivBackdrop = itemView.findViewById(R.id.ivBackdrop);
+            fabPopPlay = itemView.findViewById(R.id.fabPopPlay);
+            player = itemView.findViewById(R.id.player);
         }
 
         public void bind(Movie movie) {
             tvTitle.setText(movie.getTitle());
             tvOverview.setText(movie.getOverview());
-            String imageUrl;
-            // if phone is in landscape
-            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                // then imageUrl = back drop image
-                imageUrl = movie.getBackdropPath();
-                Glide.with(context)
-                        .load(imageUrl)
-                        .placeholder(R.drawable.flicks_backdrop_placeholder)
-                        .fitCenter()
-                        .transform(new RoundedCornersTransformation(50, 0))
-                        .into(ivPoster);
+            String imageUrl = movie.getPosterPath();
+            String backdropUrl = movie.getBackdropPath();
 
-                if (movie.getRating() > 5) {
-                    ivBackdrop.setVisibility(View.VISIBLE);
-                    //Set semitransparent backdrop as background of movie item with
-                    Glide.with(context).load(movie.getBackdropPath())
-                            .placeholder(R.drawable.flicks_backdrop_placeholder)
-                            .into(ivBackdrop);
+            if (getItemViewType() == POPULAR) {
+                if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    // stuff
                 } else {
-                    ivBackdrop.setVisibility(View.GONE);
+                    Glide.with(context)
+                            .load(backdropUrl)
+                            .into(ivBackdrop);
+                }
+            } else {
+                if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    // stuff
+                } else {
+                    Glide.with(context)
+                            .load(imageUrl)
+                            .transform(new FitCenter(), new RoundedCorners(25))
+                            .into(ivPoster);
+                    Glide.with(context)
+                            .load(backdropUrl)
+                            .apply(RequestOptions.bitmapTransform(new BlurTransformation(25,3)))
+                            .into(ivBackdrop);
                 }
             }
-            else {
-                // else imageUrl = poster image
-                imageUrl = movie.getPosterPath();
-                Glide.with(context)
-                        .load(imageUrl)
-                        .placeholder(R.drawable.flicks_movie_placeholder)
-                        .fitCenter()
-                        .transform(new RoundedCornersTransformation(30, 0))
-                        .into(ivPoster);
 
-                if (movie.getRating() > 5) {
-                    ivBackdrop.setVisibility(View.VISIBLE);
-                    //Set semitransparent backdrop as background of movie item with
-                    Glide.with(context).load(movie.getBackdropPath())
-                            .placeholder(R.drawable.flicks_backdrop_placeholder)
-                            .into(ivBackdrop);
-                } else {
-                    ivBackdrop.setVisibility(View.GONE);
-                }
-            }
+//                Glide.with(context)
+//                        .load(imageUrl)
+//                        //.transform(new FitCenter(), new RoundedCorners(25))
+//                        //.apply(RequestOptions.bitmapTransform(new BlurTransformation(7,1)))
+//                        .into(ivPoster);
+
             // ORIGINAL - Glide.with(context).load(imageUrl).into(ivPoster);
 
             // 1. Register click listener on the whole row
             itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 2. Navigate to a new activity on tap
+                    Intent i = new Intent(context, DetailActivity.class);
+                    i.putExtra("movie", Parcels.wrap(movie));
+                    context.startActivity(i);
+                }
+            });
+            tvOverview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // 2. Navigate to a new activity on tap

@@ -29,6 +29,7 @@
         style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:isIndicator="true"
         android:numStars="10"
         android:padding="10dp"
@@ -44,6 +45,8 @@
         android:textAlignment="textStart"
         android:textColor="@color/white"
         android:textSize="18sp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical"
         tools:text="Wonder Woman comes into conflict with the Soviet Union during the Cold War in the 1980s and finds a formidable foe by the name of the Cheetah." />
 </LinearLayout>
 </layout>
