@@ -1,5 +1,6 @@
 package com.example.tft_flixster.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,36 +12,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.codepath.asynchttpclient.AsyncHttpClient;
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.tft_flixster.DetailActivity;
+import com.example.tft_flixster.MainActivity;
 import com.example.tft_flixster.R;
-import com.example.tft_flixster.databinding.ItemMovieBinding;
 import com.example.tft_flixster.models.Movie;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.parceler.Parcels;
 
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-import okhttp3.Headers;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
@@ -164,6 +156,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     // 2. Navigate to a new activity on tap
                     Intent i = new Intent(context, DetailActivity.class);
                     i.putExtra("movie", Parcels.wrap(movie));
+//                    ActivityOptionsCompat options = ActivityOptionsCompat.
+//                            makeSceneTransitionAnimation((Activity) context, tvTitle, "profile");
+//                    context.startActivity(i, options.toBundle());
                     context.startActivity(i);
                 }
             });
@@ -173,6 +168,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     // 2. Navigate to a new activity on tap
                     Intent i = new Intent(context, DetailActivity.class);
                     i.putExtra("movie", Parcels.wrap(movie));
+//                    ActivityOptionsCompat options = ActivityOptionsCompat.
+//                            makeSceneTransitionAnimation((Activity) context, tvTitle, "profile");
+//                    context.startActivity(i, options.toBundle());
                     context.startActivity(i);
                 }
             });

@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TFT_Flixster">
-        <activity android:name=".DetailActivity"
+        <activity
+            android:name=".DetailActivity"
             android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".MainActivity">
             <intent-filter>

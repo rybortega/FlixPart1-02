@@ -75,6 +75,8 @@ public class DetailActivity extends YouTubeBaseActivity {
         });
     }
 
+
+
     private void initializeYoutube(String youtubeKey, Boolean isPopular) {
         binding.player.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override

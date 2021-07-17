@@ -45,6 +45,7 @@
 
             <TextView
                 android:id="@+id/tvTitle"
+                android:transitionName="title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/ivPoster"
@@ -56,6 +57,7 @@
 
             <TextView
                 android:id="@+id/tvOverview"
+                android:transitionName="overview"
                 android:layout_width="wrap_content"
                 android:layout_height="120dp"
                 android:layout_below="@+id/tvTitle"
